@@ -11,6 +11,8 @@ import com.bcp.tcambio.dto.TipoCambioInputDto;
 import com.bcp.tcambio.dto.TipoCambioOutputDto;
 import com.bcp.tcambio.service.TipoCambioService;
 
+import reactor.core.publisher.Mono;
+
 @RestController
 public class TipoCambioController {
 		
@@ -18,7 +20,7 @@ public class TipoCambioController {
 	TipoCambioService tipoCambioService;
 	
 	@GetMapping("/tipo-cambio")
-	public TipoCambioOutputDto aplicarTipoCambio(@Valid @ModelAttribute TipoCambioInputDto tipoCambioInputDto) {
+	public Mono<TipoCambioOutputDto> aplicarTipoCambio(@Valid @ModelAttribute TipoCambioInputDto tipoCambioInputDto) {
 		return tipoCambioService.aplicaTipoCambio(tipoCambioInputDto);
 	}
 	

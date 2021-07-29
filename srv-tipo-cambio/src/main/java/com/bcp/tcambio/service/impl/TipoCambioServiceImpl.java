@@ -3,29 +3,35 @@ package com.bcp.tcambio.service.impl;
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.bcp.tcambio.dto.TipoCambioInputDto;
 import com.bcp.tcambio.dto.TipoCambioOutputDto;
 import com.bcp.tcambio.model.Tarifario;
 import com.bcp.tcambio.service.TipoCambioService;
 
+import reactor.core.publisher.Mono;
+
 @Service
 public class TipoCambioServiceImpl implements TipoCambioService{
 
-	private RestTemplate restTemplate;
+	private WebClient webClient;
 	
-	public TipoCambioServiceImpl(RestTemplate restTemplate) {
+	public TipoCambioServiceImpl(WebClient webClient) {
 		super();
-		this.restTemplate = restTemplate;
+		this.webClient = webClient;
 	}
 
 	@Override
-	public TipoCambioOutputDto aplicaTipoCambio(TipoCambioInputDto tipoCambioInputDto) {
+	public Mono<TipoCambioOutputDto> aplicaTipoCambio(TipoCambioInputDto tipoCambioInputDto) {
 		
 		String codigo = tipoCambioInputDto.getMonedaOrigen().concat(tipoCambioInputDto.getMonedaDestino());
-		return obtenerTotal(restTemplate.getForObject("/{codigo}", Tarifario.class, codigo), tipoCambioInputDto);
 		
+		return webClient.get()
+				.uri("/{codigo}", codigo)
+				.retrieve()
+				.bodyToMono(Tarifario.class)
+				.map((tarif) -> obtenerTotal(tarif, tipoCambioInputDto));
 	}
 	
 	private TipoCambioOutputDto obtenerTotal(Tarifario tarifario, TipoCambioInputDto tipoCambioInputDto) {

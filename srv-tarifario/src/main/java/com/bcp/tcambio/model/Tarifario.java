@@ -2,34 +2,28 @@ package com.bcp.tcambio.model;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-
-@Entity
-@Table(name="tarifario")
+@Table(value="tarifario")
 public class Tarifario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tarifario_seq")
-	@SequenceGenerator(name = "tarifario_seq", allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tarifario_seq")
+//	@SequenceGenerator(name = "tarifario_seq", allocationSize = 1)
 	private long id;
 	
-	@Column(name = "codigo")
+	@Column(value = "codigo")
 	private String codigo;
 
-	@Column(name = "origen")
+	@Column(value = "origen")
 	private String origen;
 
-	@Column(name = "destino")
+	@Column(value = "destino")
 	private String destino;
 	
-	@Column(name = "factor")
+	@Column(value = "factor")
 	private BigDecimal factor;
 
 	public long getId() {

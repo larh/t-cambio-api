@@ -1,7 +1,5 @@
 package com.bcp.tcambio.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bcp.tcambio.model.Tarifario;
 import com.bcp.tcambio.service.TarifarioService;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 @RestController
 public class TarifarioController {
 	
@@ -19,17 +20,17 @@ public class TarifarioController {
 	TarifarioService tarifarioService;
 	
 	@GetMapping("/tarifario")
-	public List<Tarifario> getAllTarifarios() {
+	public Flux<Tarifario> getAllTarifarios() {
 		return tarifarioService.listarTarifario();
 	}
 	
 	@GetMapping("/tarifario/{codigo}")
-	public Tarifario getTarifario(@PathVariable String codigo) {
+	public Mono<Tarifario> getTarifario(@PathVariable String codigo) {
 		return tarifarioService.getTarifario(codigo);
 	}
 	
 	@PostMapping("/tarifario")
-	public Tarifario addTarifario(@RequestBody Tarifario tarifario) {
+	public Mono<Tarifario> addTarifario(@RequestBody Tarifario tarifario) {
 		return tarifarioService.addTarifario(tarifario);
 	}
 	

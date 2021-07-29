@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS tarifario;
+DROP SEQUENCE IF EXISTS tarifario_seq;
 
 CREATE sequence tarifario_seq START WITH 3 INCREMENT BY 1;
 

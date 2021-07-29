@@ -2,10 +2,9 @@ package com.bcp.tcambio.service.impl;
 
 import java.math.BigDecimal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.bcp.tcambio.dao.TarifarioDao;
 import com.bcp.tcambio.dto.TipoCambioInputDto;
 import com.bcp.tcambio.dto.TipoCambioOutputDto;
 import com.bcp.tcambio.model.Tarifario;
@@ -14,14 +13,18 @@ import com.bcp.tcambio.service.TipoCambioService;
 @Service
 public class TipoCambioServiceImpl implements TipoCambioService{
 
-	@Autowired
-	TarifarioDao tarifarioDao;
+	private RestTemplate restTemplate;
 	
+	public TipoCambioServiceImpl(RestTemplate restTemplate) {
+		super();
+		this.restTemplate = restTemplate;
+	}
+
 	@Override
 	public TipoCambioOutputDto aplicaTipoCambio(TipoCambioInputDto tipoCambioInputDto) {
 		
 		String codigo = tipoCambioInputDto.getMonedaOrigen().concat(tipoCambioInputDto.getMonedaDestino());
-		return obtenerTotal(tarifarioDao.findByCodigo(codigo), tipoCambioInputDto);
+		return obtenerTotal(restTemplate.getForObject("/{codigo}", Tarifario.class, codigo), tipoCambioInputDto);
 		
 	}
 	

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.bcp.tcambio.zuul</groupId>
 	<artifactId>srv-zuul-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>srv-zuul-server</name>
 	<description>Demo project for Spring Boot</description>
 

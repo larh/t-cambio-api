@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class Configuracion {
 
-private String pathTarifario = "http://localhost:8080/tarifario";
+private String pathTarifario = "http://srv-tarifario/tarifario";
 	
 	@Bean
 	WebClient webClient() {
